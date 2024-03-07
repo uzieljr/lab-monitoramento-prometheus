@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+
+  #NOD-EXPORT   -----------------------------------
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    stdin_open: true
+    volumes:
+    - /:/host:ro,rslave
+    tty: true
+    ports:
+    - 9100:9100/tcp
+    restart: always
+    command:
+    - --path.rootfs=/host
+
+
+
+
+  #PROMETHEUS   -----------------------------------
+  prometheus:
+    image: prom/prometheus
+    stdin_open: true
+    volumes:
+    - /var/www/prometheus:/etc/prometheus
+    tty: true
+    ports:
+    - 9090:9090/tcp
+    restart: always    
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+
+
+
+
+  #RENDER DO GRAFANA   -----------------------------------
+  renderer:
+    image: grafana/grafana-image-renderer:3.5.0
+    ports:
+    - 3001:8081/tcp  
+    restart: always    
+
+
+
+
+  #GRAFANA -------------------------------------------
+  grafana:
+    image: grafana/grafana:7.5.7
+    environment:
+      GF_LOG_FILTERS: rendering:debug
+      GF_RENDERING_CALLBACK_URL: http://renderer:3000/
+      GF_RENDERING_SERVER_URL: http://renderer:3001/render
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource,grafana-image-renderer
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SERVER_HTTP_PORT: '3000'
+      GF_SERVER_PROTOCOL: http
+      #GF_SMTP_ENABLED: 'true'
+      #GF_SMTP_HOST: smtp.gmail.com
+      #GF_SMTP_USER: seu_email@gmail.com.br
+      #GF_SMTP_PASSWORD: xxxxx
+    volumes:
+    - /var/www/grafana:/var/lib/grafana
+    ports:
+    - 3000:3000/tcp
+    restart: always  
+    
+    
+   

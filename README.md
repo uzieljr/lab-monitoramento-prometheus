@@ -1,5 +1,7 @@
 ## Monitoramento Eficiente de Servidores Linux com Prometheus, Node Exporter e Grafana
 
+<img src="/img/diagrama.png">
+
 Este laboratório foi criado para apresentar uma abordagem simples e eficaz de monitoramento de servidores Linux usando a potente combinação da stack Prometheus e Node Exporter, com a visualização consolidada proporcionada pelo Grafana.
 
 ### Recursos Destacados
