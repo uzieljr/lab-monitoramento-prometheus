@@ -10,12 +10,12 @@ scrape_configs:
 # Aponta para o node exporter local para coletar as métricas.
   - job_name: 'node-local' # É por esse nome que iremos encontrar as métricas posteriormente.
     static_configs:
-      - targets: ['node-exporter:9100'] #nome do serviço na stack, poderia ser "localhost:9100", pois o agente está rodando na mesma máquina local.
+      - targets: ['node-exporter-local:9100'] #nome do serviço na stack, poderia ser "localhost:9100", pois o agente está rodando na mesma máquina local.
 
 # Aponta para o node exporter alvo para coletar as métricas.
-#  - job_name: 'alvo-01'
-#    static_configs:
-#      - targets: ['192.168.xx.xx:9100']
+  - job_name: 'SRV-servicos'
+    static_configs:
+      - targets: ['192.168.1.231:9100']
 
 # Aponta para outro node exporter alvo para coletar as métricas.
 #  - job_name: 'alvo-02'

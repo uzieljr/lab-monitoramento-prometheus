@@ -3,7 +3,7 @@ version: '2'
 services:
 
   #NOD-EXPORT   -----------------------------------
-  node-exporter:
+  node-exporter-local:
     image: quay.io/prometheus/node-exporter
     stdin_open: true
     volumes:
